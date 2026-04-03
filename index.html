@@ -1,0 +1,802 @@
+Enter<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الريس</title>
+  <style>
+    :root {
+      --bg: #04070f;
+      --panel: rgba(8, 13, 24, 0.82);
+      --panel-2: rgba(11, 18, 33, 0.72);
+      --stroke: rgba(96, 165, 250, 0.14);
+      --text: #e8f1ff;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-2: #22c55e;
+      --accent-3: #a78bfa;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.62);
+      --radius: 28px;
+    }* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.18), transparent 24%),
+    radial-gradient(circle at top right, rgba(167, 139, 250, 0.16), transparent 22%),
+    radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.12), transparent 20%),
+    linear-gradient(180deg, #02040a 0%, #060b16 55%, #02040a 100%);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 18%, transparent 84%);
+  opacity: 0.16;
+  z-index: 0;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(96,165,250,0.18), transparent 64%);
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.wrap {
+  width: min(1180px, calc(100% - 24px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 0 40px;
+  position: relative;
+}
+
+.hero-card {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(8,13,24,0.86), rgba(2,6,18,0.8));
+  border: 1px solid var(--stroke);
+  border-radius: 34px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(96,165,250,0.22), rgba(167,139,250,0.16), rgba(34,197,94,0.16));
+  filter: blur(28px);
+  opacity: 0.72;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.06fr 0.94fr;
+  gap: 22px;
+  padding: 24px;
+}
+
+.brand-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, rgba(96,165,250,0.26), rgba(167,139,250,0.16));
+  box-shadow: 0 14px 40px rgba(0,0,0,0.36);
+  flex: 0 0 auto;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.04) contrast(1.03) brightness(0.95);
+}
+
+.brand-copy h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: 0.3px;
+}
+
+.typing {
+  min-height: 28px;
+  margin-top: 8px;
+  color: #dbeafe;
+  font-size: clamp(14px, 2vw, 18px);
+  opacity: 0.94;
+}
+
+.pill-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.pill {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text);
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.intro {
+  margin-top: 18px;
+  font-size: clamp(16px, 2.1vw, 19px);
+  line-height: 1.95;
+  color: #dbeafe;
+  max-width: 64ch;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.btn {
+  text-decoration: none;
+  color: white;
+  padding: 13px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(135deg, rgba(96,165,250,0.94), rgba(59,130,246,0.70));
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  font-weight: 700;
+}
+
+.btn.alt {
+  background: linear-gradient(135deg, rgba(34,197,94,0.94), rgba(20,184,166,0.74));
+  box-shadow: 0 14px 30px rgba(16, 185, 129, 0.18);
+}
+
+.btn.ghost {
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stat {
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 18px;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat::after {
+  content: "";
+  position: absolute;
+  inset: auto -28% -58% auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96,165,250,0.22), transparent 70%);
+}
+
+.stat .num {
+  font-size: 32px;
+  font-weight: 900;
+  color: white;
+}
+
+.stat .label {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+  padding: 0 0 34px;
+  margin-top: -6px;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(8,13,24,0.86), rgba(2,6,18,0.78));
+  border: 1px solid rgba(148,163,184,0.12);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  position: relative;
+}
+
+.card .head {
+  padding: 20px 22px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.card .sub {
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.8;
+}
+
+.about { grid-column: span 7; }
+.services { grid-column: span 5; }
+.portfolio { grid-column: span 7; }
+.contact { grid-column: span 5; }
+.footer-card { grid-column: 1 / -1; }
+
+.content {
+  padding: 18px 22px 22px;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.list-item strong { display: block; }
+.list-item span { color: var(--muted); font-size: 13px; }
+
+.tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.tag {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(96,165,250,0.12);
+  color: #dbeafe;
+  border: 1px solid rgba(96,165,250,0.20);
+  font-size: 14px;
+}
+
+.profile-shot {
+  display: grid;
+  gap: 16px;
+  padding: 18px 22px 22px;
+}
+
+.post {
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0b1220;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  isolation: isolate;
+}
+
+.post img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  filter: saturate(1.02) contrast(1.04) brightness(0.96);
+  transform: scale(1.01);
+}
+
+.post::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 44%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
+  z-index: 1;
+}
+
+.post-ui {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+}
+
+.post-top, .post-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.post-chip {
+  padding: 10px 13px;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.78);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 13px;
+}
+
+.reactions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reaction {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comment-box {
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.comment-box .title {
+  color: #dbeafe;
+  font-weight: 700;
+}
+
+.comment-box .meta {
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.input, .textarea {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 14px 16px;
+  outline: none;
+  font: inherit;
+}
+
+.textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: #94a3b8;
+}
+
+.links {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.link-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform .25s ease, background .25s ease;
+}
+
+.link-row:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+.link-row small { color: var(--muted); }
+
+.footer-card {
+  padding: 22px;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.floating {
+  position: absolute;
+  pointer-events: none;
+  animation: drift 12s ease-in-out infinite;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 12px rgba(96,165,250,0.16));
+}
+
+.f1 { top: 10%; left: 2%; }
+.f2 { top: 18%; right: 4%; animation-duration: 14s; }
+.f3 { bottom: 15%; left: 5%; animation-duration: 15s; }
+.f4 { bottom: 8%; right: 6%; animation-duration: 16s; }
+.f5 { top: 45%; left: 12%; animation-duration: 13s; }
+.f6 { top: 53%; right: 14%; animation-duration: 17s; }
+.f7 { top: 68%; left: 22%; animation-duration: 18s; }
+.f8 { top: 74%; right: 24%; animation-duration: 19s; }
+.f9 { top: 28%; left: 42%; animation-duration: 12s; }
+.f10 { bottom: 26%; right: 40%; animation-duration: 14s; }
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(-18px) translateX(10px) scale(1.05); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 980px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .about, .services, .portfolio, .contact { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .wrap { width: min(100% - 16px, 1180px); }
+  .hero-card { border-radius: 24px; }
+  .hero-content { padding: 16px; }
+  .card .head, .content, .profile-shot { padding-left: 16px; padding-right: 16px; }
+  .stats { grid-template-columns: 1fr; }
+  .avatar { width: 62px; height: 62px; border-radius: 18px; }
+  .brand-copy h1 { font-size: 30px; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" id="glow"></div>  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="floating f1"><tg-emoji emoji-id='5253671015136913410'>⭐️</tg-emoji></div>
+        <div class="floating f2"><tg-emoji emoji-id='5251560786035246366'>✅</tg-emoji></div>
+        <div class="floating f3"><tg-emoji emoji-id='5253587761490849012'>✅</tg-emoji></div>
+        <div class="floating f4"><tg-emoji emoji-id='5251395691787350877'>✅</tg-emoji></div>
+        <div class="floating f5"><tg-emoji emoji-id='5253589999168810882'>✅️</tg-emoji></div>
+        <div class="floating f6"><tg-emoji emoji-id='5251676990670402433'>🎚️</tg-emoji></div>
+        <div class="floating f7"><tg-emoji emoji-id='5251596189450661362'>💤</tg-emoji></div>
+        <div class="floating f8"><tg-emoji emoji-id='5271518678720999285'>🏃‍♂️</tg-emoji></div>
+        <div class="floating f9"><tg-emoji emoji-id='5458800285281442428'>🌙</tg-emoji></div>
+        <div class="floating f10"><tg-emoji emoji-id='5461099067742377655'>✈️</tg-emoji></div><div class="hero-content">
+      <div>
+        <div class="brand-row">
+          <div class="avatar">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="صورة هكر" />
+          </div>
+          <div class="brand-copy">
+            <h1>الريس</h1>
+            <div class="typing" id="typing"></div>
+          </div>
+        </div>
+
+        <div class="pill-row">
+          <div class="pill">Telegram: @l_PDs</div>
+          <div class="pill">Channel: @a_73a3</div>
+          <div class="pill">YouTube: @v_91las</div>
+          <div class="pill">Telegram Emoji Mode</div>
+        </div>
+
+        <p class="intro">
+          مبرمج أدوات بايثون، مطور تطبيقات، مطور مواقع، ومطور بوتات تلكرام. هذا التصميم مخصص ليكون قوي، مظلم، ومليان حركة، مع ملصقات تيليجرام نفسها، وروابطك الرسمية، وقسم بصري يعطي شكل احترافي وفخم.
+        </p>
+
+        <div class="actions">
+          <a class="btn" href="https://t.me/l_PDs" target="_blank" rel="noreferrer">حسابي</a>
+          <a class="btn alt" href="https://t.me/a_73a3" target="_blank" rel="noreferrer">القناة</a>
+          <a class="btn ghost" href="https://www.youtube.com/@v_91las" target="_blank" rel="noreferrer">يوتيوب</a>
+        </div>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat">
+          <div class="num">4</div>
+          <div class="label">Python، Apps، Web، Telegram Bots</div>
+        </div>
+        <div class="stat">
+          <div class="num">PRO</div>
+          <div class="label">ستايل مظلم مع تأثيرات متحركة</div>
+        </div>
+        <div class="stat">
+          <div class="num">TG</div>
+          <div class="label">ملصقات تيليجرام أصلية داخل الصفحة</div>
+        </div>
+        <div class="stat">
+          <div class="num">LIVE</div>
+          <div class="label">روابطك الرسمية موجودة مباشرة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid">
+  <article class="card about reveal">
+    <div class="head">
+      <div>
+        <h2>نبذة تعريفية</h2>
+        <div class="sub">قسم مختصر يشرح هويتك وشغلك بشكل قوي ومباشر.</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="list">
+        <div class="list-item">
+          <div>
+            <strong>مبرمج أدوات بايثون</strong>
+            <span>حلول سريعة، أدوات عملية، وتنفيذ واضح</span>
+          </div>
+          <div class="tag">Python</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <strong>مطور تطبيقات</strong>
+            <span>واجهات أنيقة وتجربة استخدام مرتبة</span>
+          </div>
+          <div class="tag">Apps</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <strong>مطور مواقع</strong>
+            <span>صفحات تعريفية، هبوط، ومشاريع شخصية</span>
+          </div>
+          <div class="tag">Web</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <strong>مطور بوتات تلكرام</strong>
+            <span>بوتات إدارة، تنظيم، وأتمتة</span>
+          </div>
+          <div class="tag">Telegram</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="card services reveal">
+    <div class="head">
+      <div>
+        <h2>الخدمات</h2>
+        <div class="sub">تقدر تعرض المجالات التي تشتغل عليها بشكل مرتب.</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="tagcloud">
+        <div class="tag">تصميم مواقع</div>
+        <div class="tag">بوتات تلغرام</div>
+        <div class="tag">أدوات بايثون</div>
+        <div class="tag">واجهات تطبيقات</div>
+        <div class="tag">لوحات إدارة</div>
+        <div class="tag">تكامل API</div>
+        <div class="tag">أتمتة مهام</div>
+        <div class="tag">نشر واستضافة</div>
+      </div>
+    </div>
+  </article>
+
+  <article id="portfolio" class="card portfolio reveal">
+    <div class="head">
+      <div>
+        <h2>قسم بصري</h2>
+        <div class="sub">صورة قوية مع تفاعل يشبه المنشور، لكن بأسلوب موقع احترافي.</div>
+      </div>
+    </div>
+    <div class="profile-shot">
+      <div class="post">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="صورة عرض" />
+        <div class="post-ui">
+          <div class="post-top">
+            <div class="post-chip">Python Rise 2</div>
+            <div class="post-chip"><tg-emoji emoji-id='5319160079465857105'>⭐️</tg-emoji> <tg-emoji emoji-id='5323261730283863478'>✨</tg-emoji></div>
+          </div>
+          <div class="post-bottom">
+            <div class="reactions">
+              <div class="reaction"><tg-emoji emoji-id='5327982530702359565'>⭐️</tg-emoji> 14</div>
+              <div class="reaction"><tg-emoji emoji-id='5330237710655306682'>⭐️</tg-emoji> 81</div>
+              <div class="reaction"><tg-emoji emoji-id='5253671015136913410'>⭐️</tg-emoji> 1</div>
+            </div>
+            <div class="post-chip">@l_PDs</div>
+          </div>
+        </div>
+      </div>
+      <div class="comment-box">
+        <div class="title">تعليق سريع</div>
+        <div>واجهة قوية، ملصقات تيليجرام أصلية، وصورة واضحة حتى يطلع الشكل فخم ومميز.</div>
+        <div class="meta">
+          <span><tg-emoji emoji-id='5951659726801474905'>🖼️</tg-emoji> عرض</span>
+          <span><tg-emoji emoji-id='5951697230455904333'>🧭</tg-emoji> منظم</span>
+          <span><tg-emoji emoji-id='5296704839391131160'>⚙️</tg-emoji> متجاوب</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="card contact reveal">
+    <div class="head">
+      <div>
+        <h2>التواصل</h2>
+        <div class="sub">الروابط الرسمية الخاصة بك.</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="links">
+        <a class="link-row" href="https://t.me/l_PDs" target="_blank" rel="noreferrer">
+          <div>
+            <strong>حساب تلغرام</strong>
+            <small>t.me/l_PDs</small>
+          </div>
+          <div><tg-emoji emoji-id='5253587761490849012'>✅</tg-emoji></div>
+        </a>
+        <a class="link-row" href="https://t.me/a_73a3" target="_blank" rel="noreferrer">
+          <div>
+            <strong>قناة تلغرام</strong>
+            <small>https://t.me/a_73a3</small>
+          </div>
+          <div><tg-emoji emoji-id='5251395691787350877'>✅</tg-emoji></div>
+        </a>
+        <a class="link-row" href="https://www.youtube.com/@v_91las" target="_blank" rel="noreferrer">
+          <div>
+            <strong>قناة يوتيوب</strong>
+            <small>youtube.com/@v_91las</small>
+          </div>
+          <div><tg-emoji emoji-id='5253589999168810882'>✅️</tg-emoji></div>
+        </a>
+      </div>
+
+      <form class="form" onsubmit="event.preventDefault(); alert('تمت المعاينة محلياً فقط. اربطه ببريد أو API إذا تريد إرسال فعلي.');">
+        <input class="input" type="text" placeholder="اسم الزائر" />
+        <input class="input" type="text" placeholder="وسيلة التواصل" />
+        <textarea class="textarea" placeholder="اكتب رسالتك هنا"></textarea>
+        <button class="btn" type="submit"><tg-emoji emoji-id='5251560786035246366'>✅</tg-emoji> إرسال</button>
+      </form>
+    </div>
+  </article>
+
+  <article class="card footer-card reveal">
+    صفحة تعريفية جاهزة للتعديل. بدّل الصورة أو النصوص أو الملصقات، والخط العام يبقى قوي ومظلم واحترافي.
+  </article>
+</section>
+
+  </main>  <script>
+    const typingEl = document.getElementById('typing');
+    const phrases = [
+      'مبرمج أدوات بايثون',
+      'مطور تطبيقات',
+      'مطور مواقع',
+      'مطور بوتات تلكرام'
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      typingEl.textContent = current.slice(0, charIndex);
+
+      if (!deleting) {
+        charIndex++;
+        if (charIndex > current.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1200);
+          return;
+        }
+      } else {
+        charIndex--;
+        if (charIndex < 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          charIndex = 0;
+        }
+      }
+
+      setTimeout(typeLoop, deleting ? 40 : 70);
+    }
+
+    typeLoop();
+
+    const glow = document.getElementById('glow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script></body>
+            </html>
